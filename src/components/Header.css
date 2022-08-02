@@ -1,0 +1,22 @@
+.selector-menu {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.selector-menu a {
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10.4em;
+    height: 60px;
+}
+.selector-menu a:hover:not(:focus){
+    background: rgba(0,0,0,0.6);
+}
+.selector-menu a:focus {
+    transform: scale(1.2);
+    background: rgba( 0,0,0, 0.9);
+    box-shadow: 0 0 10px 2px rgba(0,0,0,0.6);
+}
