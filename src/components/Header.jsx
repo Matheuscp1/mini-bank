@@ -16,7 +16,7 @@ const Header = (props) => (
     <Link to="/deposit">
       <FontAwesomeIcon icon={faCircleDollarToSlot} size="2x" color="white" />
     </Link>
-    <Link to="/withdraw">
+    <Link to="/plunder">
       <FontAwesomeIcon icon={faDollarSign} size="2x" color="white" />
     </Link>
   </div>
