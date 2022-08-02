@@ -9,8 +9,35 @@ const Withdraw = (props) => {
   const [valor, setValor] = useState("");
   const history = useNavigate();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
+    history("/");
+  };
 
+  const format = (amount) => {
+    var atual = 600000.0;
+    var f = atual.toLocaleString("pt-br", { minimumFractionDigits: 2 });
+    //sem R$
+    var f2 = atual.toLocaleString("pt-br", { minimumFractionDigits: 2 });
+    console.log(f);
+    console.log(
+      Number(amount)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\\,)/g, "$&.")
+    );
+    return f;
+  };
+
+  function currency(e) {
+    let value = e;
+    value = value.replace(/\D/g, "");
+    value = value.replace(/(\d)(\d{2})$/, "$1,$2");
+    value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
+    console.log(value);
+    setCpf(value)
+    return e;
+  }
 
   return (
     <div className="menu-container">
@@ -24,14 +51,14 @@ const Withdraw = (props) => {
         </div>
       </div>
       <div className="create">
-        <form >
+        <form onSubmit={handleSubmit}>
           <label>CPF:</label>
           <input
             type="text"
             required
-            onBlur={(e) => setCpf(e.target.value)}
+            onBlur={(e) => currency(e.target.value)}
             value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
+            onChange={(e) => currency(e.target.value)}
           />
           <label>Valor:</label>
           <input
