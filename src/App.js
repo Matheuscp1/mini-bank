@@ -7,6 +7,7 @@ import Content from "./components/Content";
 function App() {
   return (
     <Router>
+      <div></div>
       <Header></Header>
       <Content></Content>
     </Router>
