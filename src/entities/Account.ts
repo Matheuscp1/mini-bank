@@ -13,5 +13,5 @@ export class Account extends AbstractEntity {
 
   
   @OneToMany('Extracts', (extracts: Extracts) => extracts.accountId, { cascade: true, eager: true })
-  filtros: Promise<Extracts[]>
+  extracts: Promise<Extracts[]>
 }
