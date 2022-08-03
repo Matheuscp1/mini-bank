@@ -1,3 +1,4 @@
+import { Extracts } from './../entities/Extracts';
 import { Account } from './../entities/Account';
 import { getRepository } from 'typeorm';
 
@@ -5,46 +6,43 @@ export class AccountController {
   async create(request: Request, response: Response): Promise<any> {
     try {
       let account: Account = request.body;
-      let repository = getRepository(Account);
-      const accountFound = await repository.findOne({
+      let repositoryAccount = getRepository(Account);
+      let newAccount: Account = repositoryAccount.create(account);
+      let id, responseJson;
+      const accountFound = await repositoryAccount.findOne({
         where: {
           cpf: account.cpf,
         },
       });
       if (accountFound) {
-        accountFound.amount += account.amount;
-        repository.save(accountFound);
-        return await response.status(201).json(accountFound);
+        console.log(typeof accountFound.amount);
+        accountFound.amount =
+          request.body?.type == 'DEPOSITO'
+            ? Number(accountFound.amount) + account.amount
+            : Number(accountFound.amount) - account.amount;
+        console.log(Number(accountFound.amount));
+        repositoryAccount.save(accountFound);
+        responseJson = accountFound;
+        id = accountFound.id;
+      } else {
+        account.amount =
+          request.body?.type == 'DEPOSITO' ? account.amount : -account.amount;
+        newAccount = await repositoryAccount.save(account);
+        responseJson = newAccount;
+        id = newAccount.id;
       }
-      let newPermissao: Account = repository.create(account);
-      console.log('achou', accountFound);
-      const entity = Object.assign(new Account(), account);
-      newPermissao = await repository.save(entity);
-      console.log('entud', entity, account);
-      return await response.status(201).json(newPermissao);
+
+      let repositoryExtract = getRepository(Extracts);
+      let extract: Extracts = {
+        type: request.body?.type,
+        accountId: id,
+        amount: account.amount,
+      };
+      let newExtract = await repositoryExtract.save(extract);
+      return await response.status(201).json(responseJson);
     } catch (error) {
       return await response.status(400).json(error.message);
     }
   }
 }
-/*   async get(request: Request, res: Response): Promise<any> {
-    const test = getRepository(Filtros);
-    const all = await test.find({});
-    console.log(all[0].permissionario);
-    return await res.json(all);
-  }
-}
 
-await this.permissionsRepository.upsert(
-  [
-    {
-      requesterId: permissionInput.requesterId,
-      ownerId: permissionInput.ownerId,
-      reference: permissionInput.reference,
-    },
-  ],
-  {
-    conflictPaths: ['requesterId', 'ownerId', 'reference'],
-    skipUpdateIfNoValuesChanged: true,
-  },
-); */

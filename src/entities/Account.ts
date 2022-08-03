@@ -12,6 +12,7 @@ export class Account extends AbstractEntity {
   amount: number;
 
   
-  @OneToMany('Extracts', (extracts: Extracts) => extracts.accountId, { cascade: true, eager: true })
+  @OneToMany('Extracts', (extracts: Extracts) => extracts.accountId)
   extracts: Promise<Extracts[]>
 }
+// { cascade: true, eager: true }
