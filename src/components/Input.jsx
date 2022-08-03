@@ -1,17 +1,12 @@
-import React, { InputHTMLAttributes, useCallback } from "react";
+import React, { useCallback } from "react";
 
-import { cep, currency, cpf } from "./mask";
+import { cep, currency, cpf } from "../utils/mask";
 
-import "./styles.css";
+import "./Input.css";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  mask: "cep" | "currency" | "cpf";
-  prefix?: string;
-}
-
-const Input: React.FC<InputProps> = ({ mask, prefix, ...props }) => {
+const Input = ({ mask, prefix, ...props }) => {
   const handleKeyUp = useCallback(
-    (e: React.FormEvent<HTMLInputElement>) => {
+    (e) => {
       if (mask === "cep") {
         cep(e);
       }

@@ -1,0 +1,7 @@
+.headerImg {
+  background: url("../../public/imgs/deposit.jpg") no-repeat right/cover;
+  height: 150px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: relative;
+}

@@ -1,0 +1,41 @@
+/* create new blog form */
+.create {
+  max-width: 500px;
+  width: 500px;
+  background: #fff;
+  height: 60%;
+  /*     margin: 0 auto;
+    text-align: center; */
+}
+.create label {
+  text-align: center;
+  display: block;
+}
+
+.create input {
+  width: 100%;
+  border: 1px solid rgb(42, 171, 81);
+  box-sizing: border-box;
+  display: block;
+}
+.create button {
+  background: rgb(42, 171, 81);
+  color: #fff;
+  border: 0;
+  padding: 10px;
+  padding-bottom: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: block;
+}
+
+
+.headerImg {
+  background: url("../../public/imgs/withdraw.jpeg") no-repeat right/cover;
+  height: 150px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: relative;
+}

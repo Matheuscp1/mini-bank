@@ -14,7 +14,7 @@ const Transations = (props) => {
           <h1>Saldo</h1>
           <div>
           <FontAwesomeIcon icon={faMoneyCheckDollar} size="1x" color="white" />
-            <p>R$350,49</p>
+   
           </div>
         </div>
       </div>
@@ -36,6 +36,12 @@ const Transations = (props) => {
           <a href="#">Teste 4</a>
           <p>R$14,09</p>
         </li>
+
+        <li className="item">
+          <a href="#">Teste 4</a>
+          <p>R$14,09</p>
+        </li>
+
       </ul>
     </div>
   );
