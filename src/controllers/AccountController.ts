@@ -43,4 +43,32 @@ export class AccountController {
       return await response.status(500).json(error.message);
     }
   }
+
+  async get(request: Request, res: Response): Promise<any> {
+    try {
+      const repositoryAccount = getRepository(Account);
+      const allAccount = await repositoryAccount.find();
+      return await res.status(200).json(allAccount);
+    } catch (error) {
+      return await res.status(500).json(error.message);
+    }
+  }
+
+  async getById(request: Request, res: Response): Promise<any[]> {
+    try {
+      const { id } = request.params;
+      const repositoryExtracts = getRepository(Extracts);
+      const allExtracts = await repositoryExtracts.find({
+        where: {
+          accountId: id,
+        },
+        order: {
+          id: 'DESC',
+        },
+      });
+      return await res.json(allExtracts);
+    } catch (error) {
+      return await res.status(500).json(error.message);
+    }
+  }
 }
