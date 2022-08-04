@@ -55,7 +55,17 @@
 .item:not(:last-child) {
   border-bottom: 1px solid #dedede;
 }
-.item:last-child {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+
+
+.btnExtract{
+  background: rgb(42, 171, 81);
+  color: #fff;
+  border: 0;
+
+  margin-top: 0.4em;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+ 
 }

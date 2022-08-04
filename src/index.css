@@ -29,11 +29,10 @@ ul li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
 }
 
 ul li:hover p{
-  transform: scale(1.5);
+  transform: scale(1.1);
   opacity: 1;
 }
 ul li:hover a{

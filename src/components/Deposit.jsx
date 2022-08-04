@@ -2,10 +2,10 @@ import style from "./Deposit.module.css";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDollarToSlot } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 import Input from "./Input";
 import { isValidCPF } from "../utils/cfpValidator";
 import Modal from "./Modal";
+import api from "../services/api";
 
 const Deposit = ({ handleChange, input, ...props }) => {
   const [cpf, setCpf] = useState({ value: "", valid: null });
@@ -18,7 +18,7 @@ const Deposit = ({ handleChange, input, ...props }) => {
     console.log(cpf);
     if (cpf.valid && valor.length < 11) {
       try {
-        let reponse = await axios.post("http://localhost:8680/api/account", {
+        let reponse = await api.post("", {
           cpf: cpf.value,
           amount: +valor,
           type: "DEPOSITO",
@@ -26,6 +26,7 @@ const Deposit = ({ handleChange, input, ...props }) => {
         setModalOpen(true);
         setCpf({ value: "", valid: null });
         setValor("");
+        setModalIcon("fa-solid fa-circle-check");
         console.log(valor.length, reponse.status);
       } catch (error) {
         console.log(error);
