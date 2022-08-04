@@ -3,21 +3,27 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDollarToSlot } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 import Input from "./Input";
-
+import { isValidCPF } from "../utils/cfpValidator";
 const Deposit = ({ handleChange, input, ...props }) => {
   const [cpf, setCpf] = useState("");
   const [valor, setValor] = useState("");
 
   const history = useNavigate();
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    if (cpf.length !== 14) {
-      return;
+    console.log(cpf);
+    if (cpf.valid && valor.length < 11) {
+      let reponse = await axios.post("http://localhost:8680/api/account", {
+        cpf: cpf.value,
+        amount: +valor,
+        type: "DEPOSITO",
+      });
+      console.log(valor.length, reponse);
+      history("/");
     }
-    history("/");
   };
 
   return (
@@ -40,32 +46,42 @@ const Deposit = ({ handleChange, input, ...props }) => {
           <label>CPF:</label>
           <Input
             style={
-              cpf.length === 14 || cpf.length === 0
+              cpf.valid == null || cpf.valid
                 ? { borderColor: "green" }
                 : { borderColor: "red" }
             }
             name="cpf"
             onBlur={(e) => {
-              setCpf(e.target.value);
+              setCpf({
+                value: e.target.value,
+                valid: isValidCPF(e.target.value),
+              });
+              console.log(cpf);
             }}
             mask="cpf"
             placeholder="999.999.999-99"
             required
-            maxLength="13"
+            maxLength="14"
           />
           <label>Valor:</label>
           <Input
+              style={
+                valor.length  === 0 || valor.length < 11
+                  ? { borderColor: "green" }
+                  : { borderColor: "red" }
+              }
             name="price"
             mask="currency"
             onBlur={(e) => {
-              setValor(e.target.value);
+              setValor(e.target.value.replaceAll(".", "").replace(",", "."));
+              console.log(valor.length)
             }}
             prefix="R$"
-            placeholder="999.999.999,99"
-            maxLength="13"
+            placeholder="9.999.999,99"
+            maxLength="12"
             required
           />
-          <button>Depositar</button>
+          <button>Deposito</button>
         </form>
       </div>
     </div>
