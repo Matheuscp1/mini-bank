@@ -15,13 +15,12 @@ export class AccountController {
         },
       });
       if (accountFound) {
-        console.log(typeof accountFound.amount);
         accountFound.amount =
           request.body?.type == 'DEPOSITO'
-            ? Number(accountFound.amount) + account.amount
-            : Number(accountFound.amount) - account.amount;
-        console.log(Number(accountFound.amount));
-        repositoryAccount.save(accountFound);
+            ? +accountFound.amount + account.amount
+            : +accountFound.amount - account.amount;
+        console.log(accountFound.amount);
+        await repositoryAccount.save(accountFound);
         responseJson = accountFound;
         id = accountFound.id;
       } else {
@@ -41,8 +40,7 @@ export class AccountController {
       let newExtract = await repositoryExtract.save(extract);
       return await response.status(201).json(responseJson);
     } catch (error) {
-      return await response.status(400).json(error.message);
+      return await response.status(500).json(error.message);
     }
   }
 }
-
