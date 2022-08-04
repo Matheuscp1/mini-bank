@@ -1,5 +1,6 @@
 .input-group {
   display: flex;
+  margin: 5px;
 }
 
 .prefix-span {
@@ -12,8 +13,9 @@
 
 input {
   flex: 1;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border: 2px solid #ccc;
+  
 }
 
 .prefix input {
@@ -24,7 +26,7 @@ input {
 .prefix .prefix-span {
   border-right: 0;
   border-radius: 4px 0px 0px 4px;
-  border: 1px solid rgb(42, 171, 81);
+
 }
 
 .input-group + .input-group {

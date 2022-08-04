@@ -2,27 +2,36 @@ import style from "./Deposit.module.css";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDollarToSlot } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Input from "./Input";
 import { isValidCPF } from "../utils/cfpValidator";
-const Deposit = ({ handleChange, input, ...props }) => {
-  const [cpf, setCpf] = useState("");
-  const [valor, setValor] = useState("");
+import Modal from "./Modal";
 
-  const history = useNavigate();
+const Deposit = ({ handleChange, input, ...props }) => {
+  const [cpf, setCpf] = useState({ value: "", valid: null });
+  const [valor, setValor] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalIcon, setModalIcon] = useState("fa-solid fa-circle-check");
 
   const submit = async (e) => {
     e.preventDefault();
     console.log(cpf);
     if (cpf.valid && valor.length < 11) {
-      let reponse = await axios.post("http://localhost:8680/api/account", {
-        cpf: cpf.value,
-        amount: +valor,
-        type: "DEPOSITO",
-      });
-      console.log(valor.length, reponse);
-      history("/");
+      try {
+        let reponse = await axios.post("http://localhost:8680/api/account", {
+          cpf: cpf.value,
+          amount: +valor,
+          type: "DEPOSITO",
+        });
+        setModalOpen(true);
+        setCpf({ value: "", valid: null });
+        setValor("");
+        console.log(valor.length, reponse.status);
+      } catch (error) {
+        console.log(error);
+        setModalIcon("fa-triangle-exclamation");
+        setModalOpen(true);
+      }
     }
   };
 
@@ -41,10 +50,12 @@ const Deposit = ({ handleChange, input, ...props }) => {
           </div>
         </div>
       </div>
+      {modalOpen && <Modal setOpenModal={setModalOpen} icon={modalIcon} />}
       <div className="create">
         <form onSubmit={submit}>
           <label>CPF:</label>
           <Input
+            value={cpf.value}
             style={
               cpf.valid == null || cpf.valid
                 ? { borderColor: "green" }
@@ -58,6 +69,13 @@ const Deposit = ({ handleChange, input, ...props }) => {
               });
               console.log(cpf);
             }}
+            onChange={(e) => {
+              setCpf({
+                value: e.target.value,
+                valid: isValidCPF(e.target.value),
+              });
+              console.log(cpf);
+            }}
             mask="cpf"
             placeholder="999.999.999-99"
             required
@@ -65,16 +83,21 @@ const Deposit = ({ handleChange, input, ...props }) => {
           />
           <label>Valor:</label>
           <Input
-              style={
-                valor.length  === 0 || valor.length < 11
-                  ? { borderColor: "green" }
-                  : { borderColor: "red" }
-              }
+            value={valor}
+            style={
+              valor.length === 0 || valor.length < 11
+                ? { borderColor: "green" }
+                : { borderColor: "red" }
+            }
             name="price"
             mask="currency"
             onBlur={(e) => {
               setValor(e.target.value.replaceAll(".", "").replace(",", "."));
-              console.log(valor.length)
+              console.log(valor.length);
+            }}
+            onChange={(e) => {
+              setValor(e.target.value.replaceAll(".", "").replace(",", "."));
+              console.log(valor.length);
             }}
             prefix="R$"
             placeholder="9.999.999,99"
