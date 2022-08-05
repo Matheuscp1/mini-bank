@@ -8,11 +8,11 @@ export class Account extends AbstractEntity {
   @Column({ length: 14 })
   cpf: string;
 
-  @Column({ type: 'numeric', precision: 10, scale: 2 })
+  @Column({ type: 'numeric', precision: 20, scale: 2 })
   amount: number;
 
   
-  @OneToMany('Extracts', (extracts: Extracts) => extracts.accountId)
+  @OneToMany('Extracts', (extracts: Extracts) => extracts.accountId, { onDelete: 'CASCADE' })
   extracts: Promise<Extracts[]>
 }
 // { cascade: true, eager: true }

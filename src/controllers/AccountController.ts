@@ -19,7 +19,6 @@ export class AccountController {
           request.body?.type == 'DEPOSITO'
             ? +accountFound.amount + account.amount
             : +accountFound.amount - account.amount;
-        console.log(accountFound.amount);
         await repositoryAccount.save(accountFound);
         responseJson = accountFound;
         id = accountFound.id;

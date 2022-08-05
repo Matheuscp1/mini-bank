@@ -11,7 +11,7 @@ export class Extracts extends AbstractEntity {
   @Column({ type: 'enum', enum: Type })
   type: Type;
 
-  @Column({ type: 'numeric', precision: 10, scale: 2 })
+  @Column({ type: 'numeric', precision: 20, scale: 2 })
   amount: number;
 
   @ManyToOne((type) => Account, (account) => Account, { onDelete: 'CASCADE' })
