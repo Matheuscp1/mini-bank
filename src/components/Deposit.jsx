@@ -15,21 +15,19 @@ const Deposit = ({ handleChange, input, ...props }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    console.log(cpf);
-    if (cpf.valid && valor.length < 11) {
+    let total = valor.replaceAll(".", "").replace(",", ".");
+    if (cpf.valid && total.length < 10 && +total[0] !== 0) {
       try {
-        let reponse = await api.post("", {
+        await api.post("", {
           cpf: cpf.value,
-          amount: +valor,
+          amount: +total,
           type: "DEPOSITO",
         });
         setModalOpen(true);
         setCpf({ value: "", valid: null });
         setValor("");
         setModalIcon("fa-solid fa-circle-check");
-        console.log(valor.length, reponse.status);
       } catch (error) {
-        console.log(error);
         setModalIcon("fa-triangle-exclamation");
         setModalOpen(true);
       }
@@ -51,7 +49,13 @@ const Deposit = ({ handleChange, input, ...props }) => {
           </div>
         </div>
       </div>
-      {modalOpen && <Modal setOpenModal={setModalOpen} icon={modalIcon} />}
+      {modalOpen && (
+        <Modal
+          setOpenModal={setModalOpen}
+          icon={modalIcon}
+          textType="Depositar"
+        />
+      )}
       <div className="create">
         <form onSubmit={submit}>
           <label>CPF:</label>
@@ -68,14 +72,12 @@ const Deposit = ({ handleChange, input, ...props }) => {
                 value: e.target.value,
                 valid: isValidCPF(e.target.value),
               });
-              console.log(cpf);
             }}
             onChange={(e) => {
               setCpf({
                 value: e.target.value,
                 valid: isValidCPF(e.target.value),
               });
-              console.log(cpf);
             }}
             mask="cpf"
             placeholder="999.999.999-99"
@@ -86,25 +88,24 @@ const Deposit = ({ handleChange, input, ...props }) => {
           <Input
             value={valor}
             style={
-              valor.length === 0 || valor.length < 11
+              valor[0] !== "0" && valor.length < 10
                 ? { borderColor: "green" }
                 : { borderColor: "red" }
             }
             name="price"
             mask="currency"
             onBlur={(e) => {
-              setValor(e.target.value.replaceAll(".", "").replace(",", "."));
-              console.log(valor.length);
+              setValor(e.target.value);
             }}
             onChange={(e) => {
-              setValor(e.target.value.replaceAll(".", "").replace(",", "."));
-              console.log(valor.length);
+              setValor(e.target.value);
             }}
             prefix="R$"
-            placeholder="9.999.999,99"
-            maxLength="12"
+            placeholder="99.999,99"
+            maxLength="9"
             required
           />
+          <span style={{ margin: "10px" }}>Deposito minimo de R$1,00</span>
           <button>Deposito</button>
         </form>
       </div>

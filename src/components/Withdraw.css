@@ -42,3 +42,48 @@
   border-top-right-radius: 5px;
   position: relative;
 }
+
+.modalContainerWithDraw {
+  width: 500px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.modalContainerWithDraw .title {
+  display: inline-block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+
+
+.modalContainerWithDraw .body {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.0rem;
+  text-align: center;
+}
+
+.modalContainerWithDraw .footer {
+  flex: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainerWithDraw .footer button {
+  width: 150px;
+  height: 45px;
+  margin: 10px;
+  border: none;
+  background-color: rgb(42, 171, 81);
+  color: white;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+}

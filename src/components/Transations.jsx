@@ -11,23 +11,22 @@ const Transations = (props) => {
   const [saldoTotal, setSaldo] = useState(0);
   const history = useNavigate();
   useEffect(() => {
-    if (id) {
-      const getExtracts = async () => {
-        let reponse = await api.get(`/${id}`);
-        setData(reponse.data);
-      };
-      getExtracts();
-    } else {
-      const getAccounts = async () => {
-        let reponse = await api.get();
-        setData(reponse.data);
-      };
-      getAccounts();
-    }
-
-    console.log(id);
+    fetchApi();
   }, [id]);
 
+  const fetchApi = async () => {
+    try {
+      if (id) {
+        let reponse = await api.get(`/${id}`);
+        setData(reponse.data);
+      } else {
+        let reponse = await api.get();
+        setData(reponse.data);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <div className="menu-container">
       <div className="header-img">
@@ -53,6 +52,11 @@ const Transations = (props) => {
           </div>
         </div>
       </div>
+      {data.length === 0 && (
+        <ul className="list">
+          <li className="item">Nenhum dado encontrado</li>
+        </ul>
+      )}
       {id
         ? data?.map((element) => {
             let date = new Date(element.createdDate).toLocaleDateString(
@@ -62,7 +66,6 @@ const Transations = (props) => {
                 hour: "2-digit",
               }
             );
-            console.log("data", date);
             let saldo = +element.amount;
             return (
               <ul className="list" key={element.id}>
@@ -91,7 +94,6 @@ const Transations = (props) => {
                       onClick={() => {
                         setSaldo(saldo);
                         history(`/${element.id}`);
-                        console.log(saldo);
                       }}
                     >
                       Ver extrato

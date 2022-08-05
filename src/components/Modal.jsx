@@ -3,9 +3,8 @@ import "./Modal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
-function Modal({ setOpenModal, icon }) {
+function Modal({ setOpenModal, icon, saqueDisponivel, textType }) {
   const history = useNavigate();
-
   let title =
     icon === "fa-triangle-exclamation"
       ? "Houve um erro durante a transação"
@@ -45,7 +44,7 @@ function Modal({ setOpenModal, icon }) {
               setOpenModal(false);
             }}
           >
-            Depositar
+            {textType}
           </button>
         </div>
       </div>
