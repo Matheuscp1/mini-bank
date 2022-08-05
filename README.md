@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+## Versão
+Esse projeto utiliza NodeJS v16.14.0
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Funcionalidades, estrutura, comandos e arquivos de configuração para o back-end
+Esse projeto já possui algumas bibliotecas e funcionalidades prontas, como as seguintes:
+* [x] TypeORM (ORM para modelagem de Banco de Dados)
+* [x] Mysql
+* [x] ESLint (Ferramenta para manter o código padronizado e evitar erros)
+* [x] Git Commit Linter (Verifica todo commit realizado se ele segue as convenções de nomenclatura do GIT)
+* [x] Express para servidor web
+* [x] Typescript para tipagem
 
-## Available Scripts
+## Arquivo de configuração
+# Crie arquivo .env na pasta raiz do back-end, copie as variavéis do arquivo .env.example e cole no arquivo .env
+# Altere as varivéis DB para as configuraçãos do seu banco de dados mysql e altere as varivéis SERVER para a porta e ip desejavel
+# Api esta rondando na porta 8680
 
-In the project directory, you can run:
+## Estrutura
+O projeto está estruturado de forma que consiga desacoplar o máximo de funcionalidades da outra, para que haja o mínimo de dependências do mesmo arquivo e para que possam reaproveitar funções sem a necessidade de duplicar o mesmo código.
 
-### `npm start`
+A pasta "Routes", está separada de acordo com a entidade necessária, e todas elas são unificadas dentro do arquivo "router.ts". 
+Caso queira que a rota seja autenticada, é necessário adicionar o middleware "AuthMiddleWare", sendo assim, ele irá verificar se a requisição possui um token válido.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Comandos
+Para baixar as depêndencias do projeto de desenvolvimento, certifique-se de estar utilizando a versão correta do NodeJS e execute o seguinte comando:
 
-### `npm test`
+```
+npm install
+```
+Para criar as tabelas no banco de dados mysql:
+```
+npm run typeorm migration:run
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Para executar o projeto em ambiente de desenvolvimento:
+```
+npm run dev
+```
+Para executar o projeto em ambiente de produção:
+```
+npm start
+```
+## Banco de Dados
+Para manter o banco de dados versionado, este projeto utiliza a orm TypeORM e utiliza o modelo de migrations.
 
-### `npm run build`
+Para gerar uma nova migration:
+```
+npm run typeorm migration:generate -- -n [nomeMigration]
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para reverter a última migration:
+```
+npm run typeorm migration:revert
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Para executar a migration:
+```
+npm run typeorm migration:run
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Funcionalidades, comandos e arquivos de configuração para o front-end
+Esse projeto já possui algumas bibliotecas e funcionalidades prontas, como as seguintes:
+* [x] Axios (para o consumo da api)
+* [x] React (paginas SPA)
+* [x] ESLint (Ferramenta para manter o código padronizado e evitar erros)
+* [x] Git Commit Linter (Verifica todo commit realizado se ele segue as convenções de nomenclatura do GIT)
+* [x] Font Awesome (icones)
+* [x] Validador de CPF
+* [x] Mascara para inputs (mascara para CPF e dinheiro)
 
-### `npm run eject`
+## Arquivo de configuração
+# Crie arquivo .env na pasta raiz do front-end, copie as variavéis do arquivo .env.example e cole no arquivo .env
+# Altere as varivéis REACT para a porta e servidor da api para o consumo
+# aplição front-end esta rondando na porta 300
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Comandos
+Para baixar as depêndencias do projeto de desenvolvimento, certifique-se de estar utilizando a versão correta do NodeJS e execute o seguinte comando:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+npm install
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Para executar o projeto em ambiente de produção:
+```
+npm start
+```
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
